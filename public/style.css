@@ -1,4 +1,33 @@
-body {
-  padding: 50px;
-  font: 14px Helvetica, Arial, sans-serif;
+.heading{
+  margin-bottom: 30px;
+}
+
+.text-muted{
+  padding-top: 10px;
+  font-size: 90%;
+}
+
+.panel-status .row{
+  margin-bottom: 10px;
+}
+
+.panel-settings .row{
+  margin-bottom: 20px;
+}
+
+.panel-settings label{
+  margin-bottom: 0;
+}
+
+.panel-settings .text-muted{
+  padding-top: 5px;
+}
+
+.panel-schedule .to{
+  padding-top: 7px;
+  text-align: center;
+}
+
+.panel-body .row:last-child{
+  margin-bottom: 0;
 }

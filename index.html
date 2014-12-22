@@ -2,14 +2,143 @@
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>Hi there</title>
+    <title>Zeroth Law of Thermodynamics</title>
     <meta name='description' content=''>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <link rel='apple-touch-icon' href='apple-touch-icon.png'>
     <link rel='stylesheet' href='style.css'>
+    <link rel='stylesheet' href='bootstrap.min.css'>
+    <link rel='stylesheet' href='bootstrap-theme.min.css'>
   </head>
   <body>
-    <p>Hi</p>
+    <div class='container'>
+      <div class='row'>
+        <div class='col-xs-12'>
+          <h3 class='heading'>Zeroth Law of Thermodynamics</h3>
+        </div>
+      </div>
+
+      <div class='panel panel-default panel-status'>
+        <div class='panel-heading'>Status</div>
+        <div class='panel-body'>
+          <div class='row'>
+            <div class='col-xs-8'><label>Current Temp</label></div>
+            <div class='col-xs-4'>
+              <span id='current-temp'>68</span>
+              <span class='unit'>℉</span>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-xs-8'><label>Last Motion</label></div>
+            <div class='col-xs-4' id='last-motion'>23 minutes ago</div>
+          </div>
+          <div class='row'>
+            <div class='col-xs-8'><label>Current Mode</label></div>
+            <div class='col-xs-4' id='current-mode'>Normal</div>
+          </div>
+        </div>
+      </div>
+
+      <div class='panel panel-default panel-schedule'>
+        <div class='panel-heading'>Schedules</div>
+        <div class='panel-body'>
+          <div class='row'>
+            <div class='col-xs-12'><label>Away Period</label></div>
+          </div>
+          <div class='row'>
+            <div class='col-xs-5'>
+              <input class='form-control' type='time' id='away-start'></input>
+            </div>
+            <div class='col-xs-2 to'>to</div>
+            <div class='col-xs-5'>
+              <input class='form-control' type='time' id='away-end'></input>
+            </div>
+          </div>
+          <hr />
+          <div class='row'>
+            <div class='col-xs-12'><label>Sleep Period</label></div>
+          </div>
+          <div class='row'>
+            <div class='col-xs-5'>
+              <input class='form-control' type='time' id='sleep-start'></input>
+            </div>
+            <div class='col-xs-2 to'>to</div>
+            <div class='col-xs-5'>
+              <input class='form-control' type='time' id='sleep-end'></input>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='panel panel-default panel-modes'>
+        <div class='panel-heading'>Modes</div>
+        <div class='panel-body'>
+          <div class='row'>
+            <div class='col-xs-3'>
+              <button type='button' class='btn btn-danger' id='mode-off'>Off</button>
+              <p class='text-muted'>Turn the system completely off. Will not resume scheduled operations until put into another mode.</p>
+            </div>
+            <div class='col-xs-3'>
+              <button type='button' class='btn btn-warning' id='mode-override'>Override</button>
+              <p class='text-muted'>Temporarily force the system to meet the target temperature for 3 hours. After this period, scheduled operation will resume.</p>
+            </div>
+            <div class='col-xs-3'>
+              <button type='button' class='btn btn-success' id='mode-normal'>Normal</button>
+              <p class='text-muted'>Operate normally and follow the scheduled away and sleep rules.</p>
+            </div>
+            <div class='col-xs-3'>
+              <button type='button' class='btn btn-primary' id='mode-always'>Always On</button>
+              <p class='text-muted'>Meet the target temperature permanently. Will not go into sleep or away mode until put back into normal operation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='panel panel-default panel-settings'>
+        <div class='panel-heading'>Settings</div>
+        <div class='panel-body'>
+          <div class='form-horizontal' role='form'>
+            <div class='row'>
+              <div class='col-xs-8'>
+                <label>Target Temperature</label>
+                <p class='text-muted'>The target temperature when not in sleep or away mode.</p>
+              </div>
+              <div class='col-xs-4'>
+                <div class='input-group'>
+                  <input type='number' class='form-control' id='target-temp' />
+                  <div class='input-group-addon'>℉</div>
+                </div>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-xs-8'>
+                <label>Temp Threshold</label>
+                <p class='text-muted'>The threshold which triggers the heater turn turn on or off.</p>
+              </div>
+              <div class='col-xs-4'>
+                <div class='input-group'>
+                  <input type='number' class='form-control' id='temp-threshold' />
+                  <div class='input-group-addon'>℉</div>
+                </div>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-xs-8'>
+                <label>Sleep Temperature</label>
+                <p class='text-muted'>The target temperature when in sleep mode.</p>
+              </div>
+              <div class='col-xs-4'>
+                <div class='input-group'>
+                  <input type='number' class='form-control' id='sleep-offset' />
+                  <div class='input-group-addon'>℉</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </body>
 </html>
