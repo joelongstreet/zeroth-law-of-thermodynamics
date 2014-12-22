@@ -21,14 +21,14 @@ $(function(){
     socket.emit('update-settings', { times : times });
   });
 
-  // settings updates
-  $('#save-thresholds').click(function(){
-    var thresholds = {
-      target      : $('#target-temp').val(),
-      threshold   : $('#temp-threshold').val(),
-      sleep       : $('#sleep-temp').val()
+  // temperatures updates
+  $('#save-temperatures').click(function(){
+    var temperatures = {
+      target      : parseInt($('#target-temp').val()),
+      threshold   : parseInt($('#temp-threshold').val()),
+      sleep       : parseInt($('#sleep-temp').val())
     };
 
-    socket.emit('update-settings', { thresholds : thresholds });
+    socket.emit('update-settings', { temperatures : temperatures });
   });
 });
