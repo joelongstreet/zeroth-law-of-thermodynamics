@@ -27,3 +27,4 @@ var server = app.listen(app.get('port'), function() {
 });
 
 socket.init(server);
+schedule.run();
