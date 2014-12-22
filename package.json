@@ -1,0 +1,13 @@
+{
+  "name": "zeroth-law-of-thermodynamics",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "express": "~4.2.0",
+    "static-favicon": "~1.0.0",
+    "ejs": "^1.0.0"
+  }
+}
