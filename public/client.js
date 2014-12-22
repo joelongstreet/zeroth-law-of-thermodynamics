@@ -6,7 +6,7 @@ $(function(){
   // mode updates
   $('.btn-mode').click(function(){
     var mode = $(this).data('mode');
-    socket.emit('mode-update', { mode : mode });
+    socket.emit('update-settings', { mode : mode });
   });
 
   // time updates
@@ -18,17 +18,17 @@ $(function(){
       sleepEnd    : $('#sleep-end').val()
     };
 
-    socket.emit('time-update', times);
+    socket.emit('update-settings', { times : times });
   });
 
   // settings updates
-  $('#save-settings').click(function(){
-    var settings = {
+  $('#save-thresholds').click(function(){
+    var thresholds = {
       target      : $('#target-temp').val(),
       threshold   : $('#temp-threshold').val(),
       sleep       : $('#sleep-temp').val()
     };
 
-    socket.emit('settings-update', settings);
+    socket.emit('update-settings', { thresholds : thresholds });
   });
 });
