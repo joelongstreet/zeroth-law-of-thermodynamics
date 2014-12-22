@@ -10,6 +10,10 @@
     <link rel='stylesheet' href='style.css'>
     <link rel='stylesheet' href='bootstrap.min.css'>
     <link rel='stylesheet' href='bootstrap-theme.min.css'>
+
+    <script src='http://code.jquery.com/jquery-1.11.2.min.js'></script>
+    <script src='/socket.io/socket.io.js'></script>
+    <script src='/client.js'></script>
   </head>
   <body>
     <div class='container'>
@@ -68,6 +72,12 @@
               <input class='form-control' type='time' id='sleep-end'></input>
             </div>
           </div>
+          <hr />
+          <div class='row'>
+            <div class='col-xs-12'>
+              <button type='button' class='btn btn-primary' id='save-times'>Save Times</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -76,19 +86,19 @@
         <div class='panel-body'>
           <div class='row'>
             <div class='col-xs-3'>
-              <button type='button' class='btn btn-danger' id='mode-off'>Off</button>
+              <button type='button' class='btn btn-danger btn-mode' data-mode='off'>Off</button>
               <p class='text-muted'>Turn the system completely off. Will not resume scheduled operations until put into another mode.</p>
             </div>
             <div class='col-xs-3'>
-              <button type='button' class='btn btn-warning' id='mode-override'>Override</button>
+              <button type='button' class='btn btn-warning btn-mode' data-mode='override'>Override</button>
               <p class='text-muted'>Temporarily force the system to meet the target temperature for 3 hours. After this period, scheduled operation will resume.</p>
             </div>
             <div class='col-xs-3'>
-              <button type='button' class='btn btn-success' id='mode-normal'>Normal</button>
+              <button type='button' class='btn btn-success btn-mode' data-mode='normal'>Normal</button>
               <p class='text-muted'>Operate normally and follow the scheduled away and sleep rules.</p>
             </div>
             <div class='col-xs-3'>
-              <button type='button' class='btn btn-primary' id='mode-always'>Always On</button>
+              <button type='button' class='btn btn-primary btn-mode' data-mode='always'>Always On</button>
               <p class='text-muted'>Meet the target temperature permanently. Will not go into sleep or away mode until put back into normal operation.</p>
             </div>
           </div>
@@ -130,9 +140,14 @@
               </div>
               <div class='col-xs-4'>
                 <div class='input-group'>
-                  <input type='number' class='form-control' id='sleep-offset' />
+                  <input type='number' class='form-control' id='sleep-temp' />
                   <div class='input-group-addon'>℉</div>
                 </div>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='col-xs-12'>
+                <button type='button' class='btn btn-primary' id='save-settings'>Save Settings</button>
               </div>
             </div>
           </div>
