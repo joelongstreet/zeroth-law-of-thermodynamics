@@ -2,6 +2,7 @@
 #include "OneWire/OneWire.h"
 
 OneWire TEMPERATURE_SENSOR = OneWire(D0);
+int lastTemperature = 0;
 uint8_t rom[8];
 uint8_t resp[9];
 
@@ -52,10 +53,13 @@ void loop()
   int fahrenheit    = ((celsius*9.0)/5.0+32.0);
 
   // publish the relay state and current temperature
-  char publishString[64];
-  sprintf(publishString, "{ \"relayState\": %u, \"celsius\": %u, \"fahrenheit\": %u }", relayState, celsius, fahrenheit);
-  Spark.publish("update", publishString);
+  // only if changed
+  if(celsius != lastTemperature){
+    char publishString[64];
+    sprintf(publishString, "{ \"relayState\": %u, \"celsius\": %u, \"fahrenheit\": %u }", relayState, celsius, fahrenheit);
+    Spark.publish("update", publishString);
+  }
+  celsius = lastTemperature;
 
-  // add a delay to prevent rate limiting
-  delay(5000);
+  delay(500);
 }
