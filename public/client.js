@@ -19,7 +19,6 @@ var formatTime = function (timeInSeconds) {
 
 
 var updateTimeLeft = function(opts){
-  console.log(opts.time);
   $('#override-time').text(formatTime(opts.time));
 };
 
