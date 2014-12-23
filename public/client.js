@@ -1,6 +1,29 @@
 var socket = io();
 
 
+var formatTime = function (timeInSeconds) {
+  var sec_num = parseInt(timeInSeconds, 10);
+  var hours   = Math.floor(sec_num / 3600);
+  var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+  var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+  if (hours   < 10) hours   = '0' + hours;
+  if (minutes < 10) minutes = '0' + minutes;
+  if (seconds < 10) seconds = '0' + seconds;
+  var time    = [
+    hours, ':', minutes, ':', seconds
+  ].join('');
+
+  return time;
+};
+
+
+var updateTimeLeft = function(opts){
+  console.log(opts.time);
+  $('#override-time').text(formatTime(opts.time));
+};
+
+
 var updateMode = function(mode){
   $('#current-mode').text(mode.charAt(0).toUpperCase() + mode.slice(1));
   $('.panel-modes').find('.btn').removeClass('active');
@@ -37,6 +60,8 @@ $(function(){
 
   // highlight the the selected button
   updateMode(currentMode);
+
+  socket.on('override-time-left', updateTimeLeft);
 
   // show when someone else changes the settings
   socket.on('settings-update', function(data){
