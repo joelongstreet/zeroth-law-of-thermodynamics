@@ -2,6 +2,7 @@ var express = require('express');
 var auth = require('http-auth');
 var path = require('path');
 var config = require('./config')();
+var spark = require('./lib/spark');
 
 
 var basic = auth.basic({}, function(username, password, next){
@@ -19,7 +20,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req, res){
-  res.render('index.ejs', { settings : require('./lib/settings') });
+  res.render('index.ejs', {
+    settings    : require('./lib/settings'),
+    properties  : spark.getProperties()
+  });
 });
 
 
@@ -29,4 +33,4 @@ var server = app.listen(app.get('port'), function() {
 
 
 require('./lib/socket').init(server);
-require('./lib/spark').connect(require('./lib/schedule').run);
+spark.connect(require('./lib/schedule').run);

@@ -30,17 +30,21 @@
           <div class='row'>
             <div class='col-xs-8'><label>Current Temp</label></div>
             <div class='col-xs-4'>
-              <span id='current-temp'>68</span>
+              <span id='current-temp'><%= properties.fahrenheit %></span>
               <span class='unit'>℉</span>
             </div>
           </div>
           <div class='row'>
             <div class='col-xs-8'><label>Last Motion</label></div>
-            <div class='col-xs-4' id='last-motion'>23 minutes ago</div>
+            <div class='col-xs-4' id='last-motion'>xx minutes ago</div>
           </div>
           <div class='row'>
             <div class='col-xs-8'><label>Current Mode</label></div>
             <div class='col-xs-4' id='current-mode'><%= settings.mode.charAt(0).toUpperCase() + settings.mode.slice(1) %></div>
+          </div>
+          <div class='row'>
+            <div class='col-xs-8'><label>Relay State</label></div>
+            <div class='col-xs-4' id='relay-state'><%= properties.relayState %></div>
           </div>
         </div>
       </div>

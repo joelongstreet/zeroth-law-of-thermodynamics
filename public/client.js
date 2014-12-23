@@ -3,6 +3,17 @@ var socket = io();
 
 $(function(){
 
+  // update the status on socket events
+  socket.on('properties-update', function(data){
+    $('#current-temp').text(data.fahrenheit);
+
+    var relayState = 'Off';
+    if(data.relayState == 1) relayState = 'On';
+
+    $('#relay-state').text(relayState);
+  });
+
+  // highlight the the selected button
   $('.panel-modes').find('[data-mode="' + currentMode + '"]')
     .addClass('active');
 
