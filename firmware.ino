@@ -6,9 +6,7 @@ uint8_t rom[8];
 uint8_t resp[9];
 
 int RELAY = D1;
-
 int relayState = 0;
-float currentTemperature = 0.0;
 
 
 int setRelay(String params){
@@ -23,8 +21,7 @@ int setRelay(String params){
 
 void setup()
 {
-  Spark.variable("temperature", &currentTemperature, STRING);
-  Spark.function("set-relay", setRelay);
+  Spark.function("setRelay", setRelay);
 }
 
 
@@ -50,17 +47,14 @@ void loop()
   byte MSB = resp[1];
   byte LSB = resp[0];
 
-  int16_t intTemp   = ((MSB << 8) | LSB); //using two's compliment 16-bit
-  float celsius     = ((double)intTemp)/16.0;
-  float fahrenheit  = (( celsius*9.0)/5.0+32.0);
+  int16_t intTemp   = ((MSB << 8) | LSB);
+  int celsius       = ((double)intTemp)/16.0;
+  int fahrenheit    = ((celsius*9.0)/5.0+32.0);
 
   // publish the relay state and current temperature
   char publishString[64];
-  sprintf(publishString, "{ \"relayState\": \"%u\", \"celsius\": %e, , \"fahrenheit\": %e }", relayState, celsius, fahrenheit);
-  Spark.publish("temperature", publishString);
-
-  // make available to the spark variable
-  currentTemperature = fahrenheit;
+  sprintf(publishString, "{ \"relayState\": %u, \"celsius\": %u, \"fahrenheit\": %u }", relayState, celsius, fahrenheit);
+  Spark.publish("update", publishString);
 
   // add a delay to prevent rate limiting
   delay(5000);
