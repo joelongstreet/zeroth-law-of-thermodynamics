@@ -13,6 +13,7 @@
 
     <script src='http://code.jquery.com/jquery-1.11.2.min.js'></script>
     <script src='/socket.io/socket.io.js'></script>
+    <script>var currentMode = "<%= settings.mode %>";</script>
     <script src='/client.js'></script>
   </head>
   <body>
@@ -39,7 +40,7 @@
           </div>
           <div class='row'>
             <div class='col-xs-8'><label>Current Mode</label></div>
-            <div class='col-xs-4' id='current-mode'>Normal</div>
+            <div class='col-xs-4' id='current-mode'><%= settings.mode.charAt(0).toUpperCase() + settings.mode.slice(1) %></div>
           </div>
         </div>
       </div>

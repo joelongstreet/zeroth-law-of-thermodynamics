@@ -3,9 +3,15 @@ var socket = io();
 
 $(function(){
 
+  $('.panel-modes').find('[data-mode="' + currentMode + '"]')
+    .addClass('active');
+
   // mode updates
   $('.btn-mode').click(function(){
     var mode = $(this).data('mode');
+    $('.panel-modes').find('.btn').removeClass('active');
+    $(this).addClass('active');
+    $('#current-mode').text(mode.charAt(0).toUpperCase() + mode.slice(1));
     socket.emit('update-settings', { mode : mode });
   });
 
