@@ -1,4 +1,5 @@
 var express = require('express');
+var auth = require('http-auth');
 var ejs = require('ejs');
 var path = require('path');
 var favicon = require('static-favicon');
@@ -7,11 +8,16 @@ var socket = require('./lib/socket');
 var schedule = require('./lib/schedule');
 
 
+var basic = auth.basic({}, function(username, password, next){
+  next(username === config.USERNAME && password === config.PASSWORD);
+});
+
+
 var app = express();
 app.engine('.ejs', require('ejs').__express);
 app.set('views', __dirname);
 
-
+app.use(auth.connect(basic));
 app.use(favicon());
 app.use(express.static(path.join(__dirname, 'public')));
 
