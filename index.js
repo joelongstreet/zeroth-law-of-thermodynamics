@@ -2,6 +2,7 @@ var express = require('express');
 var ejs = require('ejs');
 var path = require('path');
 var favicon = require('static-favicon');
+var config = require('./config')();
 var socket = require('./lib/socket');
 var schedule = require('./lib/schedule');
 
@@ -19,7 +20,7 @@ app.use('/', function(req, res){
   res.render('index.ejs', { settings : schedule.getSettings() });
 });
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', config.PORT || 3000);
 
 
 var server = app.listen(app.get('port'), function() {
