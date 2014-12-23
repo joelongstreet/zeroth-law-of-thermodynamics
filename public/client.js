@@ -1,28 +1,56 @@
 var socket = io();
 
 
+var updateMode = function(mode){
+  $('#current-mode').text(mode.charAt(0).toUpperCase() + mode.slice(1));
+  $('.panel-modes').find('.btn').removeClass('active');
+  $('.panel-modes').find('[data-mode="' + mode + '"]').addClass('active');
+};
+
+
+var updateTimes = function(times){
+  $('#away-start').val(times.awayStart);
+  $('#away-end').val(times.awayEnd);
+  $('#sleep-start').val(times.sleepStart);
+  $('#sleep-end').val(times.sleepEnd);
+};
+
+
+var updateTemperatures = function(temperatures){
+  $('#target-temp').val(temperatures.target);
+  $('#temp-threshold').val(temperatures.threshold);
+  $('#sleep-temp').val(temperatures.sleep);
+};
+
+
+var updateProps = function(data){
+  $('#current-temp').text(data.fahrenheit);
+
+  var relayState = 'Off';
+  if(data.relayState == 1) relayState = 'On';
+
+  $('#relay-state').text(relayState);
+};
+
+
 $(function(){
 
-  // update the status on socket events
-  socket.on('properties-update', function(data){
-    $('#current-temp').text(data.fahrenheit);
+  // highlight the the selected button
+  updateMode(currentMode);
 
-    var relayState = 'Off';
-    if(data.relayState == 1) relayState = 'On';
-
-    $('#relay-state').text(relayState);
+  // show when someone else changes the settings
+  socket.on('settings-update', function(data){
+    if(data.mode) updateMode(data.mode);
+    if(data.times) updateTimes(data.times);
+    if(data.temperatures) updateTemperatures(data.temperatures);
   });
 
-  // highlight the the selected button
-  $('.panel-modes').find('[data-mode="' + currentMode + '"]')
-    .addClass('active');
+  // update the status on socket events
+  socket.on('properties-update', updateProps);
 
   // mode updates
   $('.btn-mode').click(function(){
     var mode = $(this).data('mode');
-    $('.panel-modes').find('.btn').removeClass('active');
-    $(this).addClass('active');
-    $('#current-mode').text(mode.charAt(0).toUpperCase() + mode.slice(1));
     socket.emit('update-settings', { mode : mode });
   });
 
