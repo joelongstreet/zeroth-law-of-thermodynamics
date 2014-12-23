@@ -6,6 +6,7 @@ var favicon = require('static-favicon');
 var config = require('./config')();
 var socket = require('./lib/socket');
 var schedule = require('./lib/schedule');
+var spark = require('./lib/spark');
 
 
 var basic = auth.basic({}, function(username, password, next){
@@ -34,4 +35,4 @@ var server = app.listen(app.get('port'), function() {
 });
 
 socket.init(server);
-schedule.run();
+spark.connect(schedule.run);
