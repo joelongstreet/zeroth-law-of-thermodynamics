@@ -6,6 +6,8 @@ int lastTemperature = 0;
 uint8_t rom[8];
 uint8_t resp[9];
 
+int MOTION_DETECTOR = D2;
+int motion_detected = 0;
 int RELAY = D1;
 int relayState = 0;
 
@@ -23,6 +25,8 @@ int setRelay(String params){
 void setup()
 {
   Spark.function("setRelay", setRelay);
+  pinMode(RELAY, OUTPUT);
+  pinMode(MOTION_DETECTOR, INPUT);
 }
 
 
@@ -52,13 +56,19 @@ void loop()
   int celsius       = ((double)intTemp)/16.0;
   int fahrenheit    = ((celsius*9.0)/5.0+32.0);
 
+  if(digitalRead(MOTION) == LOW){
+    motion_detected = 1;
+  }
+
   // publish the relay state and current temperature
   // only if changed
   if(celsius != lastTemperature){
     char publishString[64];
-    sprintf(publishString, "{ \"relayState\": %u, \"celsius\": %u, \"fahrenheit\": %u }", relayState, celsius, fahrenheit);
+    sprintf(publishString, "{ \"relayState\": %u, \"celsius\": %u, \"fahrenheit\": %u, \"motionDetected\": %u }", relayState, celsius, fahrenheit, motion_detected);
     Spark.publish("update", publishString);
   }
+
+  motion_detected = 0;
   celsius = lastTemperature;
 
   delay(500);
